@@ -8,9 +8,6 @@ console.log(`Serve ${front}`)
 
 app.use(express.json())
 app.use('/', express.static(front))
-app.get('/api', getApi)
-app.get('/api/wof', getApiWof)
-app.post('/api/wof', postApiWof)
 
 app.listen(port, ()=>{
     console.log(`Serveur démarré sur le port ${port}`)
