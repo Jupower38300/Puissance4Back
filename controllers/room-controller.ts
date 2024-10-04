@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { POOL } from "../index";
+import { Room } from "../models/room";
 
 export async function getRooms(request: Request, response: Response) {
     //TODO à faire 
@@ -19,8 +20,9 @@ export async function postRooms(req: Request, res: Response) {
     try {
         const db = await POOL.getConnection();
         const [result]: any = await db.execute("INSERT INTO room(name, player) VALUES (?,?)", [json.name, json.player]);
-        const id = result.insertId;
-        res.send();
+        const id = +result.insertId;
+        const resultat = await db.query("SELECT * FROM Room WHERE id = ?", [id]);
+        res.send(resultat[0]);
     } catch (error: any) {
         console.error(error.message);
         res.status(500);
