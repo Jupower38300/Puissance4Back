@@ -12,6 +12,10 @@ app.use('/', express.static(front))
 app.get('/games', getGames)
 app.post('/games', createGame)
 
-app.listen(port, ()=>{
+app.use(express.json());
+app.use('/', express.static(front));
+app.get('/sign-up', signIn);
+
+app.listen(port, () => {
     console.log(`Serveur démarré sur le port ${port}`)
-})
+});
