@@ -1,7 +1,7 @@
 import express, { Express } from 'express'
 import cors from 'cors'
 const app: Express = express()
-const port: number = 5000
+const port = 8080
 import path from 'path'
 import { createGame, getGames } from "./controllers/player.controller"
 import { getRooms } from './controllers/room-controller'
@@ -20,7 +20,6 @@ export const POOL = mysql.createPool({
     port: 8889
 });
 
-app.use(cors());
 app.use(express.json())
 app.use('/', express.static(front))
 app.get('/games', getGames)
