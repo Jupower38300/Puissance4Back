@@ -1,3 +1,4 @@
+    response.send();
 import { Request, Response } from "express";
 import { POOL } from "../index";
 import { Room } from "../models/room";
