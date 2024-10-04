@@ -1,8 +1,8 @@
 import express, { Express } from 'express'
-const app: Express = express()
-const port = 5000
+const app: Express = express();
+const port = 8080;
 import path from 'path'
-import { createGame, getGames } from "./controllers/player.controller"
+import { createGame, getGames } from "./controllers/game.controller"
 
 const front = path.normalize(path.join(__dirname, '..','..','Puissance-4_Puissance_a_4'))
 console.log(`Serve ${front}`)
