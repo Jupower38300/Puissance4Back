@@ -10,8 +10,7 @@ export function createGame(req: Request, res: Response) {
   const json = req.body;
 
   const game = new Game(
-    json.player1.name,
-    json.player2.name,
+    json.players,
     json.name,
     json.id
   );
