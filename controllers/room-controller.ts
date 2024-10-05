@@ -6,7 +6,7 @@ export async function getRooms(request: Request, response: Response) {
     //TODO à faire 
     try {
         const db = await POOL.getConnection();
-        const [rows, fields] = await db.query("SELECT * FROM room");
+        const [rows] = await db.query("SELECT id, name, player FROM room");
         response.json(rows);
     } catch (error: any) {
         console.error(error.message);
@@ -19,7 +19,7 @@ export async function postRooms(req: Request, res: Response) {
     const json = req.body;
     try {
         const db = await POOL.getConnection();
-        const [result]: any = await db.execute("INSERT INTO room(name, player) VALUES (?,?)", [json.name, json.player]);
+        const [result]: any = await db.execute("INSERT INTO room(name, player) VALUES (?,?)", [json.name, json.players[0].name]);
         const id = +result.insertId;
         const resultat = await db.query("SELECT * FROM Room WHERE id = ?", [id]);
         res.send(resultat[0]);
