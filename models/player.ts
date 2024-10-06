@@ -1,6 +1,8 @@
 export class Player{
+    id!: number;
     name: string;
-    constructor(name:string){
-        this.name = name
+    constructor(id: number, name:string){
+        this.id = id;
+        this.name = name;
     }
 }

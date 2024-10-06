@@ -6,11 +6,11 @@ export async function signUp(request: Request, response: Response) {
     const json = request.body;
     if (json.name !== '') {
       const db = await POOL.getConnection();
-      const existingUser = await db.query(
+      const [existingUser]: any = await db.query(
         'SELECT * FROM player WHERE name = ?',
         [json.name]
       );
-      if (existingUser[0].length > 0) {
+      if (existingUser.length > 0) {
         response
           .status(400)
           .json({ error: `Le pseudo ${json.name} existe déjà.` });
@@ -32,11 +32,11 @@ export async function signIn(request: Request, response: Response) {
   try {
     const json = request.body;
     const db = await POOL.getConnection();
-    const existingUser = await db.query(
+    const [existingUser]: any = await db.query(
       'SELECT name FROM player WHERE name = ?',
       [json.name]
     );
-    if (existingUser[0].length > 0) {
+    if (existingUser.length > 0) {
       response.send(true);
     } else {
       response.send(false);
@@ -45,5 +45,21 @@ export async function signIn(request: Request, response: Response) {
     console.error(err.message);
     response.status(500);
     response.send();
+  }
+}
+export async function getId(name: string): Promise<number | null> {
+  const db = await POOL.getConnection();
+  try {
+    const [rows]: any = await db.query('SELECT id FROM player WHERE name = ?', [
+      name,
+    ]);
+    if (rows.length > 0) {
+      return rows[0].id;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'ID du joueur:", error);
+    throw error;
   }
 }
